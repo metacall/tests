@@ -39,4 +39,5 @@ RUN echo "${CACHE_INVALIDATE}" \
 	&& cat /root/metacall.log \
 	&& metacall install py metacall \
 	&& echo "call test()" | metacall load py main.py \
+	&& echo "call world()" | metacall load py main.py \
 	&& cat /root/metacall.log

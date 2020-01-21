@@ -3,7 +3,7 @@
 // const { metacall, metacall_load_from_file } = require('metacall');
 
 module.exports = {
-	hello: function() {
-		console.log('Hello World');
+	hello: function(a) {
+		return 'Hello ' + a;
 	},
 };
