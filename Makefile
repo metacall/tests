@@ -17,7 +17,7 @@
 #	limitations under the License.
 #
 
-.PHONY: all deps build test help default
+.PHONY: all help test default
 
 # Default target
 default: all
