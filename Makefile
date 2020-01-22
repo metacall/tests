@@ -17,13 +17,14 @@
 #	limitations under the License.
 #
 
-.PHONY: all help test default
+.PHONY: all help base test default
 
 # Default target
 default: all
 
 # All targets
 all:
+	@$(MAKE) base
 	@$(MAKE) test
 
 # Show help
@@ -31,16 +32,23 @@ help:
 	@echo 'Management commands for metacall-distributable:'
 	@echo
 	@echo 'Usage:'
+	@echo '    make base         Build base container with a fresh download.'
 	@echo '    make test         Run integration tests.'
 	@echo '    make help         Show verbose help.'
 	@echo
+
+# Build base container
+base:
+	# Generate a unique id for invalidating the cache of test layers
+	$(eval CACHE_INVALIDATE := $(shell date +%s))
+	# Build base
+	@cd base && docker build --build-arg CACHE_INVALIDATE=${CACHE_INVALIDATE} -t metacall/tests:base -f Dockerfile .
 
 # Integration tests
 test:
 	# Generate a unique id for invalidating the cache of test layers
 	$(eval CACHE_INVALIDATE := $(shell date +%s))
 	# Run tests
-	@cd base && docker build --build-arg CACHE_INVALIDATE=${CACHE_INVALIDATE} -t metacall/tests:base -f Dockerfile .
 	@cd cli && docker build --build-arg CACHE_INVALIDATE=${CACHE_INVALIDATE} -t metacall/tests:cli -f Dockerfile .
 	@echo "Done"
 
