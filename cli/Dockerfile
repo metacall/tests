@@ -35,10 +35,15 @@ ARG CACHE_INVALIDATE
 
 # Install MetaCall Core
 RUN echo "${CACHE_INVALIDATE}" \
+	&& metacall install py metacall \
+	&& cat /root/metacall.log \
+	&& metacall install node metacall \
+	&& cat /root/metacall.log \
 	&& echo "inspect" | metacall load node main.js \
 	&& cat /root/metacall.log \
-	&& metacall install py metacall \
 	&& echo "call test()" | metacall load py main.py \
 	&& cat /root/metacall.log \
 	&& echo "call world()" | metacall load py main.py \
+	&& cat /root/metacall.log \
+	&& echo "inspect" | metacall load node main.js \
 	&& cat /root/metacall.log
