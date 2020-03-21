@@ -50,6 +50,7 @@ test:
 	$(eval CACHE_INVALIDATE := $(shell date +%s))
 	# Run tests
 	@cd cli && docker build --build-arg CACHE_INVALIDATE=${CACHE_INVALIDATE} -t metacall/tests:cli -f Dockerfile .
+	@cd node && docker build --build-arg CACHE_INVALIDATE=${CACHE_INVALIDATE} -t metacall/tests:node -f Dockerfile .
 	@echo "Done"
 
 # Empty target do nothing
