@@ -47,3 +47,7 @@ RUN echo "${CACHE_INVALIDATE}" \
 	&& printf 'load rb multiply.rb\ninspect\ncall multiply(5, 5)\nexit' | metacall \
 	| grep \
 		-e '25'
+# \
+#	&& printf 'load cs main.cs\ninspect\ncall Say("asd")\nexit' | metacall \
+#	| grep \
+#		-e 'asd'
