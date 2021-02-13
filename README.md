@@ -4,11 +4,11 @@ Integration tests for MetaCall Core infrastructure.
 
 # Dependencies
 
-- Makefile
+- Bash
 - Docker
 
 # Running Tests
 
 ```sh
-make
+./test.sh
 ```

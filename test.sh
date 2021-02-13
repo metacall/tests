@@ -1,8 +1,10 @@
+#!/usr/bin/env bash
+
 #
 #	MetaCall Tests by Parra Studios
 #	Integration tests for MetaCall Core infrastructure.
 #
-#	Copyright (C) 2016 - 2020 Vicente Eduardo Ferrer Garcia <vic798@gmail.com>
+#	Copyright (C) 2016 - 2021 Vicente Eduardo Ferrer Garcia <vic798@gmail.com>
 #
 #	Licensed under the Apache License, Version 2.0 (the "License");
 #	you may not use this file except in compliance with the License.
@@ -17,23 +19,22 @@
 #	limitations under the License.
 #
 
-FROM metacall/tests:base AS node_test
+# Get test list (any target prefixed by 'test_')
+TEST_LIST=$(cat Dockerfile | grep 'AS test_' | awk '{print $4}')
 
-# Image descriptor
-LABEL copyright.name="Vicente Eduardo Ferrer Garcia" \
-	copyright.address="vic798@gmail.com" \
-	maintainer.name="Vicente Eduardo Ferrer Garcia" \
-	maintainer.address="vic798@gmail.com" \
-	vendor="MetaCall Inc." \
-	version="0.1"
+# Run tests
+for test in ${TEST_LIST}; do
+	docker build --no-cache --progress=plain --target ${test} -t metacall/tests:${test} .
+	result=$?
+	if [[ $result -ne 0 ]]; then
+		echo "Test ${test} failed. Abort."
+		exit 1
+	fi
+done
 
-# Copy scripts
-COPY scripts/ /
+# Clean tests
+for test in ${TEST_LIST}; do
+	docker rmi metacall/tests:${test}
+done
 
-# Invalidate Cache
-ARG CACHE_INVALIDATE
-
-# Install MetaCall Core
-RUN echo "${CACHE_INVALIDATE}" \
-	&& metacall npm install metacall \
-	&& metacall codegen.js
+echo "All tests passed."
