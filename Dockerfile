@@ -88,3 +88,37 @@ FROM test_cli AS test_cli_csharp
 # RUN printf 'load cs main.cs\ninspect\ncall Say("asd")\nexit' | metacall \
 # 	| grep \
 # 		-e 'asd'
+
+# Not Found Python Test
+FROM test_base AS test_not_found_python
+
+RUN printf 'load py none.py\nexit' | metacall \
+	| grep \
+		-e 'Script (none.py) load error in loader (py)' \
+	&& printf 'load py none\nexit' | metacall \
+	| grep \
+		-e 'Script (none) load error in loader (py)'
+
+# Not Found NodeJS Test
+FROM test_base AS test_not_found_node
+
+# TODO:
+# RUN printf 'load node none.js\nexit' | metacall \
+# 	&& printf 'load node none\nexit' | metacall
+
+# Not Found Ruby Test
+FROM test_base AS test_not_found_ruby
+
+RUN printf 'load rb none.rb\nexit' | metacall \
+	| grep \
+		-e 'Script (none.rb) load error in loader (rb)' \
+	&& printf 'load rb none\nexit' | metacall \
+	| grep \
+		-e 'Script (none) load error in loader (rb)'
+
+# Not Found C# Test
+FROM test_base AS test_not_found_csharp
+
+# TODO:
+# RUN printf 'load cs none.cs\nexit' | metacall \
+# 	&& printf 'load cs none\nexit' | metacall
