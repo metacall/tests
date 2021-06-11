@@ -9,6 +9,13 @@ Integration tests for MetaCall Core infrastructure.
 
 # Running Tests
 
+## Linux
+
 ```sh
 ./test.sh
+```
+
+## windows
+```bat
+./test.bat
 ```
