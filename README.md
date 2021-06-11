@@ -4,7 +4,7 @@ Integration tests for MetaCall Core infrastructure.
 
 # Dependencies
 
-- Bash
+- Bash or Windows Shell
 - Docker
 
 # Running Tests
@@ -15,7 +15,7 @@ Integration tests for MetaCall Core infrastructure.
 ./test.sh
 ```
 
-## windows
+## Windows
 ```bat
 ./test.bat
 ```
